@@ -1,4 +1,4 @@
 
 
-venv:
-	venv/bin/activate
+run-venv:
+	. venv/bin/activate && echo "Running venv"
