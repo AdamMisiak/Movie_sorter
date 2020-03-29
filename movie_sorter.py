@@ -4,6 +4,12 @@ import sys
 
 def creating_table():
 	movies = pd.read_csv("movies.csv")
+	movies['genre'] = movies['genre'].astype('object')
+	movies['director'] = movies['director'].astype('object')
+	movies['cast'] = movies['cast'].astype('object')
+	movies['writer'] = movies['writer'].astype('object')
+	movies['language'] = movies['language'].astype('object')
+	movies['country'] = movies['country'].astype('object')
 	for index, title in enumerate(movies['title']):
 		title = title.replace(' ', '+')
 		full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
@@ -11,15 +17,12 @@ def creating_table():
 		whole_movie_info = whole_movie_info.json()
 		movies.loc[index:index, 'year'] = whole_movie_info["Year"]
 		movies.loc[index:index, 'runtime'] = whole_movie_info["Runtime"][:-3]
-		movies.loc[index:index, 'genre'] = whole_movie_info["Genre"]
-		# print(type(whole_movie_info["Genre"]))
-		# print(whole_movie_info["Genre"].split(","))
-		# print(type(whole_movie_info["Genre"].split(",")))
-		movies.loc[index:index, 'director'] = whole_movie_info["Director"]
-		movies.loc[index:index, 'cast'] = whole_movie_info["Actors"]
-		movies.loc[index:index, 'writer'] = whole_movie_info["Writer"]
-		movies.loc[index:index, 'language'] = whole_movie_info["Language"]
-		movies.loc[index:index, 'country'] = whole_movie_info["Country"]
+		movies.at[index, 'genre'] = whole_movie_info["Genre"].split(",")
+		movies.at[index, 'director'] = whole_movie_info["Director"].split(",")
+		movies.at[index, 'cast'] = whole_movie_info["Actors"].split(",")
+		movies.at[index, 'writer'] = whole_movie_info["Writer"].split(",")
+		movies.at[index, 'language'] = whole_movie_info["Language"].split(",")
+		movies.at[index, 'country'] = whole_movie_info["Country"].split(",")
 		movies.loc[index:index, 'awards'] = whole_movie_info["Awards"]
 		movies.loc[index:index, 'imdb_rating'] = float(whole_movie_info["imdbRating"])
 		movies.loc[index:index, 'imdb_votes'] = whole_movie_info["imdbVotes"].replace(',', '')
@@ -29,8 +32,8 @@ def creating_table():
 	movies['runtime'] = movies['runtime'].astype(int)
 	movies['year'] = movies['year'].astype(int)
 
-	with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-		print(movies)
+	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+	# 	print(movies)
 	return movies
 
 def sorting_movies(sorting_by, descending):
@@ -40,12 +43,13 @@ def sorting_movies(sorting_by, descending):
 	else:
 		table.sort_values(by=[sorting_by], inplace=True)
 	print(table)
+	print(table[sorting_by])
 	return table
 
 def main():
 	input_function = sys.argv[1]
 	function_argument = sys.argv[2]
-	if input_function == 'sorting_by':
+	if input_function == 'sort_by':
 		if len(sys.argv) < 4:
 			sorting_movies(function_argument, False)
 		else:
@@ -56,3 +60,5 @@ def main():
 
 if(__name__ == "__main__"):
 	main()
+
+

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3689ff52-43eb-47ff-a90b-15dd8563f86e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,9 +98,9 @@
     </state>
     <state x="2369" y="175" width="1022" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585160658330" />
     <state x="497" y="198" width="979" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585160445334" />
-    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585383641566">
+    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585471570508">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585383641566" />
+    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585471570508" />
   </component>
 </project>
