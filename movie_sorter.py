@@ -2,8 +2,9 @@ import pandas as pd
 import requests
 import sys
 
+
 def creating_table():
-	#READING CSV FILE
+	# READING CSV FILE
 	movies = pd.read_csv("movies.csv")
 
 	movies['genre'] = movies['genre'].astype('object')
@@ -13,12 +14,20 @@ def creating_table():
 	movies['language'] = movies['language'].astype('object')
 	movies['country'] = movies['country'].astype('object')
 
-	#ADDING/DELETING COLUMNS
+	# ADDING/DELETING COLUMNS
 	movies.insert(10, 'oscars_won', 0)
 	movies.insert(11, 'oscars_nominated', 0)
+	movies.insert(12, 'globes_won', 0)
+	movies.insert(13, 'globes_nominated', 0)
+	movies.insert(14, 'bafta_won', 0)
+	movies.insert(15, 'bafta_nominated', 0)
+	movies.insert(16, 'another_won', 0)
+	movies.insert(17, 'another_nominated', 0)
+	movies.insert(18, 'all_won', 0)
+	movies.insert(19, 'all_nominated', 0)
 	movies = movies.drop('awards', 1)
 
-	#FILLING TABLE WITH DATA
+	# FILLING TABLE WITH DATA
 	for index, title in enumerate(movies['title']):
 		title = title.replace(' ', '+')
 		full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
@@ -34,7 +43,9 @@ def creating_table():
 		movies.at[index, 'language'] = whole_movie_info["Language"].split(",")
 		movies.at[index, 'country'] = whole_movie_info["Country"].split(",")
 
+		# CREATING AWARDS COLUMNS
 		awards_list_all = whole_movie_info["Awards"].split(' ')
+		print(awards_list_all)
 		if awards_list_all[0] == 'Won' and 'Oscar' in awards_list_all[2]:
 			movies.at[index, 'oscars_won'] = int(awards_list_all[1])
 		else:
@@ -45,9 +56,49 @@ def creating_table():
 		else:
 			movies.at[index, 'oscars_nominated'] = 0
 
+		if awards_list_all[0] == 'Won' and 'Globe' in awards_list_all[2]:
+			movies.at[index, 'globes_won'] = int(awards_list_all[1])
+		else:
+			movies.at[index, 'globes_won'] = 0
+
+		if awards_list_all[0] == 'Nominated' and 'Globe' in awards_list_all[4]:
+			movies.at[index, 'globes_nominated'] = int(awards_list_all[2])
+		else:
+			movies.at[index, 'globes_nominated'] = 0
+
+		if awards_list_all[0] == 'Won' and 'BAFTA' in awards_list_all[2]:
+			movies.at[index, 'bafta_won'] = int(awards_list_all[1])
+		else:
+			movies.at[index, 'bafta_won'] = 0
+
+		if awards_list_all[0] == 'Nominated' and 'BAFTA' in awards_list_all[3]:
+			movies.at[index, 'bafta_nominated'] = int(awards_list_all[2])
+		else:
+			movies.at[index, 'bafta_nominated'] = 0
+
+		if 'wins' in awards_list_all:
+			index_of_win = awards_list_all.index('wins')
+			movies.at[index, 'another_won'] = int(awards_list_all[index_of_win - 1])
+		elif 'wins.' in awards_list_all:
+			index_of_win = awards_list_all.index('wins.')
+			movies.at[index, 'another_won'] = int(awards_list_all[index_of_win - 1])
+		else:
+			index_of_win = 0
+			movies.at[index, 'another_won'] = 0
+
+		if 'nominations' in awards_list_all:
+			index_of_nominations = awards_list_all.index('nominations')
+			movies.at[index, 'another_nominated'] = int(awards_list_all[index_of_nominations - 1])
+		elif 'nominations.' in awards_list_all:
+			index_of_nominations = awards_list_all.index('nominations.')
+			movies.at[index, 'another_nominated'] = int(awards_list_all[index_of_nominations - 1])
+		else:
+			index_of_nominations = 0
+			movies.at[index, 'another_won'] = 0
+
 		movies.loc[index:index, 'imdb_rating'] = float(whole_movie_info["imdbRating"])
 		movies.loc[index:index, 'imdb_votes'] = whole_movie_info["imdbVotes"].replace(',', '')
-		#movies.loc[index:index, 'box_office'] = whole_movie_info['BoxOffice']
+	# movies.loc[index:index, 'box_office'] = whole_movie_info['BoxOffice']
 
 	movies['imdb_votes'] = movies['imdb_votes'].astype(int)
 	movies['runtime'] = movies['runtime'].astype(int)
@@ -59,16 +110,18 @@ def creating_table():
 		print(movies)
 	return movies
 
+
 def sorting_movies(sorting_by, descending):
 	table = creating_table()
 	if descending:
 		table.sort_values(by=[sorting_by], inplace=True, ascending=False)
 	else:
 		table.sort_values(by=[sorting_by], inplace=True)
-	print(table)
-	print(table[['title', sorting_by]].head(50))
-	print(table[['title', 'oscars_won', 'oscars_nominated']])
+	# print(table)
+	# print(table[['title', sorting_by]].head(50))
+	# print(table[['title', 'oscars_won', 'oscars_nominated', 'globes_won','globes_nominated']])
 	return table
+
 
 def main():
 	input_function = sys.argv[1]
@@ -82,7 +135,6 @@ def main():
 			elif sys.argv[3] == 'd':
 				sorting_movies(function_argument, True)
 
-if(__name__ == "__main__"):
+
+if (__name__ == "__main__"):
 	main()
-
-

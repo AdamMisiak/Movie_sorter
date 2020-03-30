@@ -98,9 +98,21 @@
     </state>
     <state x="2369" y="175" width="1022" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585160658330" />
     <state x="497" y="198" width="979" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585160445334" />
-    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585471570508">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="658" y="385" key="com.intellij.ide.util.TipDialog" timestamp="1585576227316">
+      <screen x="62" y="27" width="1858" height="1053" />
     </state>
     <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585471570508" />
+    <state x="658" y="385" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585576227316" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/movie_sorter.py</url>
+          <line>5</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
