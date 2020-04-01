@@ -104,15 +104,4 @@
     <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585750212996" />
     <state x="658" y="385" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585588303725" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/movie_sorter.py</url>
-          <line>5</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
 </project>

@@ -108,14 +108,21 @@ def creating_table():
 
 		movies.loc[index:index, 'imdb_rating'] = float(whole_movie_info["imdbRating"])
 		movies.loc[index:index, 'imdb_votes'] = whole_movie_info["imdbVotes"].replace(',', '')
-	# movies.loc[index:index, 'box_office'] = whole_movie_info['BoxOffice']
+
+		box_office_movies = str(whole_movie_info.get('BoxOffice'))
+		if box_office_movies == "N/A" or box_office_movies == "None":
+			box_office_movies = 0
+		else:
+			box_office_movies = box_office_movies[1:].replace(',', '')
+		movies.loc[index:index, 'box_office'] = box_office_movies
 
 	# CHANGING TYPES OF COLUMNS
-	movies['imdb_votes'] = movies['imdb_votes'].astype(int)
-	movies['runtime'] = movies['runtime'].astype(int)
 	movies['year'] = movies['year'].astype(int)
+	movies['runtime'] = movies['runtime'].astype(int)
 	movies['oscars_won'] = movies['oscars_won'].astype(int)
 	movies['oscars_nominated'] = movies['oscars_nominated'].astype(int)
+	movies['imdb_votes'] = movies['imdb_votes'].astype(int)
+	movies['box_office'] = movies['box_office'].astype(int)
 
 	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 	# 	print(movies)
@@ -124,17 +131,21 @@ def creating_table():
 
 
 def sorting_movies(sorting_by, descending):
+	if descending:
+		print('Sorting movies by:', sorting_by, 'descending...')
+	else:
+		print('Sorting movies by:', sorting_by, 'ascending...')
 	table = creating_table()
 	if descending:
 		table.sort_values(by=[sorting_by], inplace=True, ascending=False)
 	else:
 		table.sort_values(by=[sorting_by], inplace=True)
 	print(table)
+	print(table[['title',sorting_by]])
 	return table
 
 
 def main():
-	print(sys.argv)
 	if len(sys.argv) > 1:
 		input_function = sys.argv[1]
 		function_argument = sys.argv[2]
