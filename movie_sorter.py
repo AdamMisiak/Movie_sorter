@@ -29,6 +29,8 @@ def creating_table():
 
 	# FILLING TABLE WITH DATA
 	for index, title in enumerate(movies['title']):
+
+		# GETTING API KEY + DATA
 		title = title.replace(' ', '+')
 		full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
 		whole_movie_info = requests.get(full_url)
@@ -45,7 +47,6 @@ def creating_table():
 
 		# CREATING AWARDS COLUMNS
 		awards_list_all = whole_movie_info["Awards"].split(' ')
-		print(awards_list_all)
 		if awards_list_all[0] == 'Won' and 'Oscar' in awards_list_all[2]:
 			movies.at[index, 'oscars_won'] = int(awards_list_all[1])
 		else:
@@ -94,20 +95,31 @@ def creating_table():
 			movies.at[index, 'another_nominated'] = int(awards_list_all[index_of_nominations - 1])
 		else:
 			index_of_nominations = 0
-			movies.at[index, 'another_won'] = 0
+			movies.at[index, 'another_nominated'] = 0
+
+		# CALCULATING TOTAL NUMBER OF WINS AND NOMINATIONS
+		movies.loc[index:index, 'all_won'] = movies.iloc[index]['oscars_won'] + movies.iloc[index]['globes_won'] + \
+											 movies.iloc[index]['bafta_won'] + movies.iloc[index]['another_won']
+
+		movies.loc[index:index, 'all_nominated'] = movies.iloc[index]['oscars_nominated'] + \
+												   movies.iloc[index]['globes_nominated'] + \
+												   movies.iloc[index]['bafta_nominated'] + \
+												   movies.iloc[index]['another_nominated']
 
 		movies.loc[index:index, 'imdb_rating'] = float(whole_movie_info["imdbRating"])
 		movies.loc[index:index, 'imdb_votes'] = whole_movie_info["imdbVotes"].replace(',', '')
 	# movies.loc[index:index, 'box_office'] = whole_movie_info['BoxOffice']
 
+	# CHANGING TYPES OF COLUMNS
 	movies['imdb_votes'] = movies['imdb_votes'].astype(int)
 	movies['runtime'] = movies['runtime'].astype(int)
 	movies['year'] = movies['year'].astype(int)
 	movies['oscars_won'] = movies['oscars_won'].astype(int)
 	movies['oscars_nominated'] = movies['oscars_nominated'].astype(int)
 
-	with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-		print(movies)
+	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+	# 	print(movies)
+	# print(movies.head(10))
 	return movies
 
 
@@ -117,23 +129,25 @@ def sorting_movies(sorting_by, descending):
 		table.sort_values(by=[sorting_by], inplace=True, ascending=False)
 	else:
 		table.sort_values(by=[sorting_by], inplace=True)
-	# print(table)
-	# print(table[['title', sorting_by]].head(50))
-	# print(table[['title', 'oscars_won', 'oscars_nominated', 'globes_won','globes_nominated']])
+	print(table)
 	return table
 
 
 def main():
-	input_function = sys.argv[1]
-	function_argument = sys.argv[2]
-	if input_function == 'sort_by':
-		if len(sys.argv) < 4:
-			sorting_movies(function_argument, False)
-		else:
-			if sys.argv[3] == 'a':
+	print(sys.argv)
+	if len(sys.argv) > 1:
+		input_function = sys.argv[1]
+		function_argument = sys.argv[2]
+		if input_function == 'sort_by':
+			if len(sys.argv) < 4:
 				sorting_movies(function_argument, False)
-			elif sys.argv[3] == 'd':
-				sorting_movies(function_argument, True)
+			else:
+				if sys.argv[3] == 'a':
+					sorting_movies(function_argument, False)
+				elif sys.argv[3] == 'd':
+					sorting_movies(function_argument, True)
+	else:
+		creating_table()
 
 
 if (__name__ == "__main__"):

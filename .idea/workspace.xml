@@ -29,7 +29,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Price_scraper_3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
@@ -73,10 +73,10 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2338" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585161624470" />
-    <state x="2663" y="298" width="424" height="490" key="FileChooserDialogImpl" timestamp="1585383653962">
+    <state x="2663" y="298" width="424" height="490" key="FileChooserDialogImpl" timestamp="1585750566973">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2663" y="298" width="424" height="490" key="FileChooserDialogImpl/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585383653962" />
+    <state x="2663" y="298" width="424" height="490" key="FileChooserDialogImpl/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585750566973" />
     <state width="1874" height="273" key="GridCell.Tab.0.bottom" timestamp="1585167427517">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -98,11 +98,11 @@
     </state>
     <state x="2369" y="175" width="1022" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585160658330" />
     <state x="497" y="198" width="979" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585160445334" />
-    <state x="658" y="385" key="com.intellij.ide.util.TipDialog" timestamp="1585576227316">
-      <screen x="62" y="27" width="1858" height="1053" />
+    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585750212996">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585471570508" />
-    <state x="658" y="385" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585576227316" />
+    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585750212996" />
+    <state x="658" y="385" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585588303725" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
