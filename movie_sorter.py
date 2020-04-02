@@ -124,6 +124,7 @@ def creating_table():
 	movies['imdb_votes'] = movies['imdb_votes'].astype(int)
 	movies['box_office'] = movies['box_office'].astype(int)
 
+
 	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 	# 	print(movies)
 	# print(movies.head(10))
@@ -137,18 +138,19 @@ def sorting_movies(sorting_by, descending):
 		print('Sorting movies by:', sorting_by, 'ascending...')
 	table = creating_table()
 	if descending:
-		table.sort_values(by=[sorting_by], inplace=True, ascending=False)
+		table.sort_values(by=sorting_by, inplace=True, ascending=False)
 	else:
-		table.sort_values(by=[sorting_by], inplace=True)
+		table.sort_values(by=sorting_by, inplace=True)
+	sorting_by.append('title')
 	print(table)
-	print(table[['title',sorting_by]])
+	print(table[sorting_by])
 	return table
 
 
 def main():
 	if len(sys.argv) > 1:
 		input_function = sys.argv[1]
-		function_argument = sys.argv[2]
+		function_argument = sys.argv[2].split(',')
 		if input_function == 'sort_by':
 			if len(sys.argv) < 4:
 				sorting_movies(function_argument, False)
