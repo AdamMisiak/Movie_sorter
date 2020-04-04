@@ -98,10 +98,14 @@
     </state>
     <state x="2369" y="175" width="1022" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585160658330" />
     <state x="497" y="198" width="979" height="737" key="SettingsEditor/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585160445334" />
-    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585836449133">
+    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585987226246">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585836449133" />
+    <state x="2536" y="367" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585987226246" />
     <state x="658" y="385" key="com.intellij.ide.util.TipDialog/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1585588303725" />
+    <state x="2543" y="239" width="672" height="678" key="search.everywhere.popup" timestamp="1585840173243">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2543" y="239" width="672" height="678" key="search.everywhere.popup/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585840173243" />
   </component>
 </project>

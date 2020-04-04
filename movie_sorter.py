@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import requests
 import sys
 
@@ -127,7 +128,8 @@ def creating_table():
 
 	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 	# 	print(movies)
-	# print(movies.head(10))
+	print(movies.head(10))
+	print(movies.dtypes)
 	return movies
 
 
@@ -147,18 +149,36 @@ def sorting_movies(sorting_by, descending):
 	return table
 
 
+def filtering_movies(column, filtering_by):
+	print('Filtering movies by:', filtering_by, 'in', column, 'column...')
+	table = creating_table()
+
+	if table[column].dtype == np.int64:
+		filtering_by = int(filtering_by)
+	elif table[column].dtype == np.float64:
+		filtering_by = float(filtering_by)
+	print(table[table[column] == filtering_by])
+	return table
+
+
 def main():
 	if len(sys.argv) > 1:
-		input_function = sys.argv[1]
-		function_argument = sys.argv[2].split(',')
-		if input_function == 'sort_by':
+		chosen_function = sys.argv[1]
+		if chosen_function == 'sort_by':
+			sorting_by = sys.argv[2].split(',')
 			if len(sys.argv) < 4:
-				sorting_movies(function_argument, False)
+				sorting_movies(sorting_by, False)
 			else:
 				if sys.argv[3] == 'a':
-					sorting_movies(function_argument, False)
+					sorting_movies(sorting_by, False)
 				elif sys.argv[3] == 'd':
-					sorting_movies(function_argument, True)
+					sorting_movies(sorting_by, True)
+
+		if chosen_function == 'filter_by':
+			filtered_column = sys.argv[2]
+			filtering_by = sys.argv[3]
+			filtering_movies(filtered_column, filtering_by)
+
 	else:
 		creating_table()
 
