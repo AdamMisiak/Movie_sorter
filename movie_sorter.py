@@ -39,12 +39,12 @@ def creating_table():
 
 		movies.loc[index:index, 'year'] = whole_movie_info["Year"]
 		movies.loc[index:index, 'runtime'] = whole_movie_info["Runtime"][:-3]
-		movies.at[index, 'genre'] = whole_movie_info["Genre"].split(",")
+		movies.at[index, 'genre'] = whole_movie_info["Genre"].replace(' ', '').split(",")
 		movies.at[index, 'director'] = whole_movie_info["Director"].split(",")
 		movies.at[index, 'cast'] = whole_movie_info["Actors"].split(",")
 		movies.at[index, 'writer'] = whole_movie_info["Writer"].split(",")
-		movies.at[index, 'language'] = whole_movie_info["Language"].split(",")
-		movies.at[index, 'country'] = whole_movie_info["Country"].split(",")
+		movies.at[index, 'language'] = whole_movie_info["Language"].replace(' ', '').split(",")
+		movies.at[index, 'country'] = whole_movie_info["Country"].replace(' ', '').split(",")
 
 		# CREATING AWARDS COLUMNS
 		awards_list_all = whole_movie_info["Awards"].split(' ')
@@ -125,11 +125,11 @@ def creating_table():
 	movies['imdb_votes'] = movies['imdb_votes'].astype(int)
 	movies['box_office'] = movies['box_office'].astype(int)
 
-
+	print('First ten rows of full table:')
 	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 	# 	print(movies)
 	print(movies.head(10))
-	print(movies.dtypes)
+	# print(movies.dtypes)
 	return movies
 
 
@@ -152,13 +152,18 @@ def sorting_movies(sorting_by, descending):
 def filtering_movies(column, filtering_by):
 	print('Filtering movies by:', filtering_by, 'in', column, 'column...')
 	table = creating_table()
-
 	if table[column].dtype == np.int64:
 		filtering_by = int(filtering_by)
+		print(table[table[column] == filtering_by])
 	elif table[column].dtype == np.float64:
 		filtering_by = float(filtering_by)
-	print(table[table[column] == filtering_by])
-	return table
+		print(table[table[column] == filtering_by])
+	elif table[column].dtype == np.object:
+		index_list = []
+		for index, row in table.iterrows():
+			if filtering_by in row[column]:
+				index_list.append(index)
+		print(table.loc[index_list, ['title', column]])
 
 
 def main():
