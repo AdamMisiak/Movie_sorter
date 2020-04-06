@@ -1,0 +1,15 @@
+###################################################################################################
+###################################Welcome in Movie sorter app!####################################
+###################################################################################################
+Available columns in table: title, year, runtime, genre, director, cast, writer,
+language, country, oscars_won, oscars_nominated, globes_won, globes_nominated,
+bafta_won, bafta_nominated, another_won, another_nominated, all_won,
+all_nominated, imdb_rating, imdb_votes, box_office
+###################################################################################################
+If you want to:
+- print the whole table: python movies_sorter.py
+- sort movies by one column (ascending by default): python movie_sorter.py sort_by NAME_OF_COLUMN
+- sort movies by one column descending mode: python movie_sorter.py sort_by NAME_OF_COLUMN d
+- sort movies by multiple columns: python movie_sorter.py sort_by NAME_OF_COLUMN,NAME_OF_COLUMN
+- filter movies by some value in some column: python movie_sorter filter_by NAME_OF_COLUMN VALUE_YOU_WANT_TO_FIND
+- filter movies that were nominated for Oscar but did not win any: python movie_sorter.py filter_by oscars

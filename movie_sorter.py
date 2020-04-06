@@ -40,9 +40,9 @@ def creating_table():
 		movies.loc[index:index, 'year'] = whole_movie_info["Year"]
 		movies.loc[index:index, 'runtime'] = whole_movie_info["Runtime"][:-3]
 		movies.at[index, 'genre'] = whole_movie_info["Genre"].replace(' ', '').split(",")
-		movies.at[index, 'director'] = whole_movie_info["Director"].split(",")
-		movies.at[index, 'cast'] = whole_movie_info["Actors"].split(",")
-		movies.at[index, 'writer'] = whole_movie_info["Writer"].split(",")
+		movies.at[index, 'director'] = whole_movie_info["Director"].split(", ")
+		movies.at[index, 'cast'] = whole_movie_info["Actors"].split(", ")
+		movies.at[index, 'writer'] = whole_movie_info["Writer"].split(", ")
 		movies.at[index, 'language'] = whole_movie_info["Language"].replace(' ', '').split(",")
 		movies.at[index, 'country'] = whole_movie_info["Country"].replace(' ', '').split(",")
 
@@ -144,7 +144,7 @@ def sorting_movies(sorting_by, descending):
 	else:
 		table.sort_values(by=sorting_by, inplace=True)
 	sorting_by.append('title')
-	print(table)
+
 	print(table[sorting_by])
 	return table
 
@@ -154,10 +154,12 @@ def filtering_movies(column, filtering_by):
 	table = creating_table()
 	if table[column].dtype == np.int64:
 		filtering_by = int(filtering_by)
-		print(table[table[column] == filtering_by])
+		table = table[table[column] == filtering_by]
+		print(table[['title', column]])
 	elif table[column].dtype == np.float64:
 		filtering_by = float(filtering_by)
-		print(table[table[column] == filtering_by])
+		table = table[table[column] == filtering_by]
+		print(table[['title', column]])
 	elif table[column].dtype == np.object:
 		index_list = []
 		for index, row in table.iterrows():
@@ -165,10 +167,19 @@ def filtering_movies(column, filtering_by):
 				index_list.append(index)
 		print(table.loc[index_list, ['title', column]])
 
+def oscars_nominated_but_no_won():
+	print('Filtering movies that were nominated for Oscar but did not win any')
+	table = creating_table()
+	table = table[table['oscars_nominated'] > 0]
+	table = table[table['oscars_won'] == 0]
+	print(table[['title', 'oscars_nominated', 'oscars_won']])
+	return table
 
 def main():
 	if len(sys.argv) > 1:
 		chosen_function = sys.argv[1]
+
+		# SORTING FUNCTION CHOSEN
 		if chosen_function == 'sort_by':
 			sorting_by = sys.argv[2].split(',')
 			if len(sys.argv) < 4:
@@ -179,10 +190,22 @@ def main():
 				elif sys.argv[3] == 'd':
 					sorting_movies(sorting_by, True)
 
+		# FILTERING FUNCTION CHOSEN
 		if chosen_function == 'filter_by':
-			filtered_column = sys.argv[2]
-			filtering_by = sys.argv[3]
-			filtering_movies(filtered_column, filtering_by)
+			if len(sys.argv) == 4:
+				filtered_column = sys.argv[2]
+				filtering_by = sys.argv[3]
+				filtering_movies(filtered_column, filtering_by)
+			elif sys.argv[2] == 'oscars':
+				oscars_nominated_but_no_won()
+
+		# HELP
+		if chosen_function == 'help':
+			file = open('help.txt', 'r')
+			try:
+				print(file.read())
+			finally:
+				file.close()
 
 	else:
 		creating_table()
