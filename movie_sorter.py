@@ -190,6 +190,15 @@ def won_80_of_nominations():
 	return table
 
 
+def box_office_100m():
+	print('Filtering movies that earned more than 100,000,000 $')
+	table = creating_table()
+	table = table[table['box_office'] > 100000000]
+	print(table[['title', 'box_office']])
+	return table
+
+
+
 def main():
 	if len(sys.argv) > 1:
 		chosen_function = sys.argv[1]
@@ -215,6 +224,8 @@ def main():
 				oscars_nominated_but_no_won()
 			elif sys.argv[2] == 'won_to_nominated':
 				won_80_of_nominations()
+			elif sys.argv[2] == 'box_office_100m':
+				box_office_100m()
 
 		# HELP
 		if chosen_function == 'help':
