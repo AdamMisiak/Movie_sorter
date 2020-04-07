@@ -198,6 +198,16 @@ def box_office_100m():
 	return table
 
 
+def comparing_movies(column, movie1, movie2):
+	print('Comparing movies:', movie1, 'and', movie2, 'by', column)
+	table = creating_table()
+	table = table[['title', column]]
+	cond1 = table[table['title'] == movie1]
+	cond2 = table[table['title'] == movie2]
+	table = cond1.append(cond2)
+	print(table)
+	return table
+
 
 def main():
 	if len(sys.argv) > 1:
@@ -227,6 +237,13 @@ def main():
 			elif sys.argv[2] == 'box_office_100m':
 				box_office_100m()
 
+		# COMPARING FUNCTION CHOSEN
+		if chosen_function == 'compare':
+			column = sys.argv[2]
+			movie1 = sys.argv[3]
+			movie2 = sys.argv[4]
+			comparing_movies(column, movie1, movie2)
+
 		# HELP
 		if chosen_function == 'help':
 			file = open('help.txt', 'r')
@@ -239,5 +256,5 @@ def main():
 		creating_table()
 
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
 	main()
