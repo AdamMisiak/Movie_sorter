@@ -129,7 +129,6 @@ def creating_table():
 	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 	# 	print(movies)
 	print(movies.head(10))
-	# print(movies.dtypes)
 	return movies
 
 
@@ -167,6 +166,7 @@ def filtering_movies(column, filtering_by):
 				index_list.append(index)
 		print(table.loc[index_list, ['title', column]])
 
+
 def oscars_nominated_but_no_won():
 	print('Filtering movies that were nominated for Oscar but did not win any')
 	table = creating_table()
@@ -174,6 +174,21 @@ def oscars_nominated_but_no_won():
 	table = table[table['oscars_won'] == 0]
 	print(table[['title', 'oscars_nominated', 'oscars_won']])
 	return table
+
+
+def won_80_of_nominations():
+	print('Filtering movies that won more than 80% of nominations')
+	table = creating_table()
+	table.insert(20, 'won_to_nominated', 0)
+	for index, title in enumerate(table['title']):
+		all_won = table.at[index, 'all_won']
+		if table.at[index, 'all_nominated'] != 0:
+			all_nominated = table.at[index, 'all_nominated']
+			table.at[index, 'won_to_nominated'] = float((all_won / all_nominated) * 100)
+	table = table[table['won_to_nominated'] > 80]
+	print(table[['title', 'all_won', 'all_nominated', 'won_to_nominated']])
+	return table
+
 
 def main():
 	if len(sys.argv) > 1:
@@ -198,6 +213,8 @@ def main():
 				filtering_movies(filtered_column, filtering_by)
 			elif sys.argv[2] == 'oscars':
 				oscars_nominated_but_no_won()
+			elif sys.argv[2] == 'won_to_nominated':
+				won_80_of_nominations()
 
 		# HELP
 		if chosen_function == 'help':
