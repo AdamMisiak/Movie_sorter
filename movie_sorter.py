@@ -208,6 +208,13 @@ def comparing_movies(column, movie1, movie2):
 	print(table)
 	return table
 
+def add_movie(name):
+	print('Adding movie:', name, 'to movies table')
+	table = creating_table()
+	table = table.append({'title':name}, ignore_index=True)
+	print(table.tail(10))
+	return table
+
 
 def main():
 	if len(sys.argv) > 1:
@@ -243,6 +250,11 @@ def main():
 			movie1 = sys.argv[3]
 			movie2 = sys.argv[4]
 			comparing_movies(column, movie1, movie2)
+
+		# ADDING FUNCTION CHOSEN
+		if chosen_function == 'add':
+			name = sys.argv[2]
+			add_movie(name)
 
 		# HELP
 		if chosen_function == 'help':
