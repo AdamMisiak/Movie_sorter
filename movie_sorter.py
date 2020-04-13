@@ -145,6 +145,7 @@ def sorting_movies(sorting_by, descending):
 	sorting_by.append('title')
 
 	print(table[sorting_by])
+	print(table[sorting_by].iloc[99])
 	return table
 
 
@@ -177,7 +178,7 @@ def oscars_nominated_but_no_won():
 
 
 def won_80_of_nominations():
-	print('Filtering movies that won more than 80% of nominations')
+	print('Filtering movies that won more than 80% of nominations...')
 	table = creating_table()
 	table.insert(20, 'won_to_nominated', 0)
 	for index, title in enumerate(table['title']):
@@ -191,7 +192,7 @@ def won_80_of_nominations():
 
 
 def box_office_100m():
-	print('Filtering movies that earned more than 100,000,000 $')
+	print('Filtering movies that earned more than 100,000,000 $...')
 	table = creating_table()
 	table = table[table['box_office'] > 100000000]
 	print(table[['title', 'box_office']])
@@ -199,7 +200,7 @@ def box_office_100m():
 
 
 def comparing_movies(column, movie1, movie2):
-	print('Comparing movies:', movie1, 'and', movie2, 'by', column)
+	print('Comparing movies:', movie1, 'and', movie2, 'by', column, '...')
 	table = creating_table()
 	table = table[['title', column]]
 	cond1 = table[table['title'] == movie1]
@@ -208,12 +209,28 @@ def comparing_movies(column, movie1, movie2):
 	print(table)
 	return table
 
+
 def add_movie(name):
-	print('Adding movie:', name, 'to movies table')
+	print('Adding movie:', name, 'to movies table...')
 	table = creating_table()
-	table = table.append({'title':name}, ignore_index=True)
+	table = table.append({'title': name}, ignore_index=True)
 	print(table.tail(10))
 	return table
+
+
+def highscores_movies():
+	print('Creating table of highscores...')
+	table = creating_table()
+	table_columns = ['runtime', 'oscars_won', 'oscars_nominated', 'globes_won', 'globes_nominated', 'bafra_won',
+					 'bafta_nominated', 'another_won', 'another_nominated', 'all_won', 'all_nominated',
+					 'imdb_rating', 'imdb_votes', 'box_office']
+
+	table_highscores = pd.DataFrame(columns=['Column', 'Movie', 'Value'])
+	table_highscores['Column'] = table_columns[1:]
+	# table_highscores = table_highscores.set_index('Column')
+	for index,row in enumerate(table_highscores):
+		pass
+	print(table_highscores)
 
 
 def main():
@@ -255,6 +272,10 @@ def main():
 		if chosen_function == 'add':
 			name = sys.argv[2]
 			add_movie(name)
+
+		# ADDING FUNCTION CHOSEN
+		if chosen_function == 'highscores':
+			highscores_movies()
 
 		# HELP
 		if chosen_function == 'help':
