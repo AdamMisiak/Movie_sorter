@@ -3,7 +3,8 @@ import numpy as np
 import requests
 import sys
 
-class Movie_sorter():
+
+class MovieSorter:
 
 	def create_table(self):
 		# READING CSV FILE
@@ -129,6 +130,27 @@ class Movie_sorter():
 		print('First ten rows of full table:')
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 		# 	print(movies)
+		#CREATE SAVE TO CSV HERE
 		print(movies.head(10))
+		return movies
 
-movies = Movie_sorter.create_table()
+	def sorting_movies(self, table, sorting_by, descending):
+		if descending:
+			print('Sorting movies by:', sorting_by, 'descending...')
+		else:
+			print('Sorting movies by:', sorting_by, 'ascending...')
+
+		if descending:
+			table.sort_values(by=sorting_by, inplace=True, ascending=False)
+		else:
+			table.sort_values(by=sorting_by, inplace=True)
+		sorting_by.append('title')
+
+		print(table[sorting_by])
+		# print(table[sorting_by].iloc[99])
+		return table
+
+
+movie_sorter = MovieSorter()
+table = movie_sorter.create_table()
+movie_sorter.sorting_movies(table, ['runtime'], False)
