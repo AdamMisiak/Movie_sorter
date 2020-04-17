@@ -145,7 +145,6 @@ def sorting_movies(sorting_by, descending):
 	sorting_by.append('title')
 
 	print(table[sorting_by])
-	print(table[sorting_by].iloc[99])
 	return table
 
 

@@ -130,16 +130,17 @@ class MovieSorter:
 		print('First ten rows of full table:')
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 		# 	print(movies)
-		#CREATE SAVE TO CSV HERE
 		print(movies.head(10))
+		movies.to_csv('movies_filled.csv', index=False)
 		return movies
 
-	def sorting_movies(self, table, sorting_by, descending):
+	def sorting_movies(self, table_filled, sorting_by, descending):
+
 		if descending:
 			print('Sorting movies by:', sorting_by, 'descending...')
 		else:
 			print('Sorting movies by:', sorting_by, 'ascending...')
-
+		table = pd.read_csv(table_filled)
 		if descending:
 			table.sort_values(by=sorting_by, inplace=True, ascending=False)
 		else:
@@ -151,6 +152,29 @@ class MovieSorter:
 		return table
 
 
+	def filtering_movies(self, table_filled, column, filtering_by):
+		print('Filtering movies by:', filtering_by, 'in', column, 'column...')
+		table = pd.read_csv(table_filled)
+		if table[column].dtype == np.int64:
+			filtering_by = int(filtering_by)
+			table = table[table[column] == filtering_by]
+			print(table[['title', column]])
+		elif table[column].dtype == np.float64:
+			filtering_by = float(filtering_by)
+			table = table[table[column] == filtering_by]
+			print(table[['title', column]])
+		elif table[column].dtype == np.object:
+			index_list = []
+			for index, row in table.iterrows():
+				if filtering_by in row[column]:
+					index_list.append(index)
+			table = table.loc[index_list]
+			print(table.loc[index_list, ['title', column]])
+
+		return table
+
+
+
 movie_sorter = MovieSorter()
-table = movie_sorter.create_table()
-movie_sorter.sorting_movies(table, ['runtime'], False)
+# table = movie_sorter.create_table()
+movie_sorter.filtering_movies('movies_filled.csv', 'genre', 'Biography')
