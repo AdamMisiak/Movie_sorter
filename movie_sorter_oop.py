@@ -135,12 +135,14 @@ class MovieSorter:
 		return movies
 
 	def sorting_movies(self, table_filled, sorting_by, descending):
-
 		if descending:
 			print('Sorting movies by:', sorting_by, 'descending...')
 		else:
 			print('Sorting movies by:', sorting_by, 'ascending...')
-		table = pd.read_csv(table_filled)
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
 		if descending:
 			table.sort_values(by=sorting_by, inplace=True, ascending=False)
 		else:
@@ -151,10 +153,12 @@ class MovieSorter:
 		# print(table[sorting_by].iloc[99])
 		return table
 
-
 	def filtering_movies(self, table_filled, column, filtering_by):
 		print('Filtering movies by:', filtering_by, 'in', column, 'column...')
-		table = pd.read_csv(table_filled)
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
 		if table[column].dtype == np.int64:
 			filtering_by = int(filtering_by)
 			table = table[table[column] == filtering_by]
@@ -170,11 +174,69 @@ class MovieSorter:
 					index_list.append(index)
 			table = table.loc[index_list]
 			print(table.loc[index_list, ['title', column]])
-
 		return table
 
+	def oscars_nominated_but_no_won(self, table_filled):
+		print('Filtering movies that were nominated for Oscar but did not win any')
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
+		table = table[table['oscars_nominated'] > 0]
+		table = table[table['oscars_won'] == 0]
+		print(table[['title', 'oscars_nominated', 'oscars_won']])
+		return table
+
+	def won_80_of_nominations(self, table_filled):
+		print('Filtering movies that won more than 80% of nominations...')
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
+		table.insert(20, 'won_to_nominated', 0)
+		for index, title in enumerate(table['title']):
+			all_won = table.at[index, 'all_won']
+			if table.at[index, 'all_nominated'] != 0:
+				all_nominated = table.at[index, 'all_nominated']
+				table.at[index, 'won_to_nominated'] = float((all_won / all_nominated) * 100)
+		table = table[table['won_to_nominated'] > 80]
+		print(table[['title', 'all_won', 'all_nominated', 'won_to_nominated']])
+		return table
+
+	def box_office_100m(self, table_filled):
+		print('Filtering movies that earned more than 100,000,000 $...')
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
+		table = table[table['box_office'] > 100000000]
+		print(table[['title', 'box_office']])
+		return table
+
+	def comparing_movies(self, table_filled, column, movie1, movie2):
+		print('Comparing movies:', movie1, 'and', movie2, 'by', column, '...')
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
+		table = table[['title', column]]
+		cond1 = table[table['title'] == movie1]
+		cond2 = table[table['title'] == movie2]
+		table = cond1.append(cond2)
+		print(table)
+		return table
+
+	def add_movie(self, table_filled, name):
+		print('Adding movie:', name, 'to movies table...')
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
+		table = table.append({'title': name}, ignore_index=True)
+		print(table.tail(10))
+		return table
 
 
 movie_sorter = MovieSorter()
 # table = movie_sorter.create_table()
-movie_sorter.filtering_movies('movies_filled.csv', 'genre', 'Biography')
+movie_sorter.add_movie('movies_filled.csv', 'test')
