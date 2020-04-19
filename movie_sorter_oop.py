@@ -236,7 +236,27 @@ class MovieSorter:
 		print(table.tail(10))
 		return table
 
+	def highscores_movies(self, table_filled):
+		print('Creating table of highscores...')
+		try:
+			table = pd.read_csv(table_filled)
+		except:
+			table = self.create_table()
+		table_columns = ['runtime', 'oscars_won', 'oscars_nominated', 'globes_nominated', 'bafta_nominated', 'another_won',
+						 'another_nominated', 'all_won', 'all_nominated', 'imdb_rating', 'imdb_votes', 'box_office']
+
+		table_highscores = pd.DataFrame(columns=['Column', 'Movie', 'Value'])
+		table_highscores['Column'] = table_columns
+		for index, row in enumerate(table_columns):
+			highscore_table = movie_sorter.sorting_movies('movies_filled.csv', [row], True)
+			highscore_value = highscore_table.loc[0, row]
+			highscore_movie = highscore_table.loc[0, 'title']
+			# print(row)
+			print(highscore_value)
+			print(highscore_movie)
+
 
 movie_sorter = MovieSorter()
 # table = movie_sorter.create_table()
-movie_sorter.add_movie('movies_filled.csv', 'test')
+movie_sorter.highscores_movies('movies_filled.csv')
+# movie_sorter.sorting_movies('movies_filled.csv', ['oscars_won'], True)
