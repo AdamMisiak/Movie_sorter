@@ -149,8 +149,7 @@ class MovieSorter:
 			table.sort_values(by=sorting_by, inplace=True)
 		sorting_by.append('title')
 
-		print(table[sorting_by])
-		# print(table[sorting_by].iloc[99])
+		#print(table[sorting_by])
 		return table
 
 	def filtering_movies(self, table_filled, column, filtering_by):
@@ -245,15 +244,16 @@ class MovieSorter:
 		table_columns = ['runtime', 'oscars_won', 'oscars_nominated', 'globes_nominated', 'bafta_nominated', 'another_won',
 						 'another_nominated', 'all_won', 'all_nominated', 'imdb_rating', 'imdb_votes', 'box_office']
 
-		table_highscores = pd.DataFrame(columns=['Column', 'Movie', 'Value'])
-		table_highscores['Column'] = table_columns
+		all_highscores_table = pd.DataFrame(columns=['Column', 'Movie', 'Value'])
+		all_highscores_table['Column'] = table_columns
 		for index, row in enumerate(table_columns):
 			highscore_table = movie_sorter.sorting_movies('movies_filled.csv', [row], True)
-			highscore_value = highscore_table.loc[0, row]
-			highscore_movie = highscore_table.loc[0, 'title']
-			# print(row)
-			print(highscore_value)
-			print(highscore_movie)
+			highscore_value = highscore_table[row].to_list()[0]
+			highscore_movie = highscore_table['title'].to_list()[0]
+			all_highscores_table.at[index, 'Value'] = highscore_value
+			all_highscores_table.at[index, 'Movie'] = highscore_movie
+		print(all_highscores_table)
+
 
 
 movie_sorter = MovieSorter()
