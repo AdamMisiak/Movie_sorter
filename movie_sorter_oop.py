@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import requests
 import sys
+import argparse
 
 
 class MovieSorter:
@@ -148,7 +149,7 @@ class MovieSorter:
 		else:
 			table.sort_values(by=sorting_by, inplace=True)
 		sorting_by.append('title')
-
+		table = table[sorting_by]
 		#print(table[sorting_by])
 		return table
 
@@ -254,9 +255,22 @@ class MovieSorter:
 			all_highscores_table.at[index, 'Movie'] = highscore_movie
 		print(all_highscores_table)
 
+		return all_highscores_table
 
 
 movie_sorter = MovieSorter()
-# table = movie_sorter.create_table()
-movie_sorter.highscores_movies('movies_filled.csv')
-# movie_sorter.sorting_movies('movies_filled.csv', ['oscars_won'], True)
+parser = argparse.ArgumentParser()
+parser.add_argument('--sort_by', help='sort table by one column (descending by default)')
+parser.add_argument('-a', '--ascending', help='sort table ascending or descending', action='store_true')
+args = parser.parse_args()
+
+if args.sort_by:
+	if args.ascending:
+		output = movie_sorter.sorting_movies('movies_filled.csv', [args.sort_by], False)
+	else:
+		output = movie_sorter.sorting_movies('movies_filled.csv', [args.sort_by], True)
+	print(output)
+
+
+
+
