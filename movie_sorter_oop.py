@@ -262,6 +262,8 @@ movie_sorter = MovieSorter()
 parser = argparse.ArgumentParser()
 parser.add_argument('--sort_by', help='sort table by one column (descending by default)')
 parser.add_argument('-a', '--ascending', help='sort table ascending or descending', action='store_true')
+parser.add_argument('--filter_by', help='filtering by one column (descending by default)')
+
 args = parser.parse_args()
 
 if args.sort_by:
@@ -270,6 +272,9 @@ if args.sort_by:
 	else:
 		output = movie_sorter.sorting_movies('movies_filled.csv', [args.sort_by], True)
 	print(output)
+
+if args.filter_by:
+	output = movie_sorter.filtering_movies('movies_filled.csv', args.column, args.value)
 
 
 
