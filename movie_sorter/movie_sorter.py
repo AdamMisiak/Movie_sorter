@@ -6,7 +6,7 @@ import sys
 
 def creating_table():
 	# READING CSV FILE
-	movies = pd.read_csv("movies.csv")
+	movies = pd.read_csv("movie_sorter/movies.csv")
 
 	movies['genre'] = movies['genre'].astype('object')
 	movies['director'] = movies['director'].astype('object')
@@ -129,6 +129,7 @@ def creating_table():
 	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
 	# 	print(movies)
 	print(movies.head(10))
+	print(movies.shape[1])
 	return movies
 
 
@@ -278,7 +279,7 @@ def main():
 
 		# HELP
 		if chosen_function == 'help':
-			file = open('help.txt', 'r')
+			file = open('../help.txt', 'r')
 			try:
 				print(file.read())
 			finally:

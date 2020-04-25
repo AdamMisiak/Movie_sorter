@@ -150,7 +150,7 @@ class MovieSorter:
 			table.sort_values(by=sorting_by, inplace=True)
 		sorting_by.append('title')
 		table = table[sorting_by]
-		#print(table[sorting_by])
+		# print(table[sorting_by])
 		return table
 
 	def filtering_movies(self, table_filled, column, filtering_by):
@@ -242,7 +242,8 @@ class MovieSorter:
 			table = pd.read_csv(table_filled)
 		except:
 			table = self.create_table()
-		table_columns = ['runtime', 'oscars_won', 'oscars_nominated', 'globes_nominated', 'bafta_nominated', 'another_won',
+		table_columns = ['runtime', 'oscars_won', 'oscars_nominated', 'globes_nominated', 'bafta_nominated',
+						 'another_won',
 						 'another_nominated', 'all_won', 'all_nominated', 'imdb_rating', 'imdb_votes', 'box_office']
 
 		all_highscores_table = pd.DataFrame(columns=['Column', 'Movie', 'Value'])
@@ -268,7 +269,7 @@ args = parser.parse_args()
 
 if args.sort_by:
 	if args.ascending:
-		output = movie_sorter.sorting_movies('movies_filled.csv', [args.sort_by], False)
+		output = movie_sorter.sorting_movies('movie_sorter/movies_filled.csv', [args.sort_by], False)
 	else:
 		output = movie_sorter.sorting_movies('movies_filled.csv', [args.sort_by], True)
 	print(output)
@@ -276,6 +277,5 @@ if args.sort_by:
 if args.filter_by:
 	output = movie_sorter.filtering_movies('movies_filled.csv', args.column, args.value)
 
-
-
-
+movie_sorter2 = movie_sorter.create_table()
+print(movie_sorter2.loc[5, 'title'])
