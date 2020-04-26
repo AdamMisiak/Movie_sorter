@@ -2,12 +2,10 @@ import pandas as pd
 import numpy as np
 import requests
 import sys
-import argparse
 
 
 class MovieSorter:
-
-	def create_table(self):
+	def creating_table(self):
 		# READING CSV FILE
 		movies = pd.read_csv("movies.csv")
 
@@ -142,12 +140,14 @@ class MovieSorter:
 			print('Sorting movies by:', sorting_by, 'ascending...')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		if descending:
 			table.sort_values(by=sorting_by, inplace=True, ascending=False)
 		else:
-			table.sort_values(by=sorting_by, inplace=True)
+			table.sort_values(by=sorting_by, inplace=True, ascending=True)
 		sorting_by.append('title')
 		table = table[sorting_by]
 		# print(table[sorting_by])
@@ -157,8 +157,10 @@ class MovieSorter:
 		print('Filtering movies by:', filtering_by, 'in', column, 'column...')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		if table[column].dtype == np.int64:
 			filtering_by = int(filtering_by)
 			table = table[table[column] == filtering_by]
@@ -180,8 +182,10 @@ class MovieSorter:
 		print('Filtering movies that were nominated for Oscar but did not win any')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		table = table[table['oscars_nominated'] > 0]
 		table = table[table['oscars_won'] == 0]
 		print(table[['title', 'oscars_nominated', 'oscars_won']])
@@ -191,8 +195,10 @@ class MovieSorter:
 		print('Filtering movies that won more than 80% of nominations...')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		table.insert(20, 'won_to_nominated', 0)
 		for index, title in enumerate(table['title']):
 			all_won = table.at[index, 'all_won']
@@ -207,8 +213,10 @@ class MovieSorter:
 		print('Filtering movies that earned more than 100,000,000 $...')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		table = table[table['box_office'] > 100000000]
 		print(table[['title', 'box_office']])
 		return table
@@ -217,8 +225,10 @@ class MovieSorter:
 		print('Comparing movies:', movie1, 'and', movie2, 'by', column, '...')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		table = table[['title', column]]
 		cond1 = table[table['title'] == movie1]
 		cond2 = table[table['title'] == movie2]
@@ -240,8 +250,10 @@ class MovieSorter:
 		print('Creating table of highscores...')
 		try:
 			table = pd.read_csv(table_filled)
+			print('Table have been take from file:', table_filled)
 		except:
-			table = self.create_table()
+			print('Table needs to be created from scratch. ')
+			table = self.creating_table()
 		table_columns = ['runtime', 'oscars_won', 'oscars_nominated', 'globes_nominated', 'bafta_nominated',
 						 'another_won',
 						 'another_nominated', 'all_won', 'all_nominated', 'imdb_rating', 'imdb_votes', 'box_office']
@@ -259,23 +271,60 @@ class MovieSorter:
 		return all_highscores_table
 
 
-movie_sorter = MovieSorter()
-parser = argparse.ArgumentParser()
-parser.add_argument('--sort_by', help='sort table by one column (descending by default)')
-parser.add_argument('-a', '--ascending', help='sort table ascending or descending', action='store_true')
-parser.add_argument('--filter_by', help='filtering by one column (descending by default)')
+if __name__ == "__main__":
+	movie_sorter = MovieSorter()
+	movies_filled = 'movies_filled.csv'
+	if len(sys.argv) > 1:
+		chosen_function = sys.argv[1]
 
-args = parser.parse_args()
+		# SORTING FUNCTION CHOSEN
+		if chosen_function == 'sort_by':
+			sorting_by_columns = sys.argv[2].split(',')
+			if len(sys.argv) < 4:
+				result = movie_sorter.sorting_movies(movies_filled, sorting_by_columns, False)
+			else:
+				if sys.argv[3] == 'a':
+					result = movie_sorter.sorting_movies(movies_filled, sorting_by_columns, False)
+				elif sys.argv[3] == 'd':
+					result = movie_sorter.sorting_movies(movies_filled, sorting_by_columns, True)
+			print(result)
 
-if args.sort_by:
-	if args.ascending:
-		output = movie_sorter.sorting_movies('movie_sorter/movies_filled.csv', [args.sort_by], False)
+		# FILTERING FUNCTION CHOSEN
+		if chosen_function == 'filter_by':
+			if len(sys.argv) == 4:
+				filtering_by_column = sys.argv[2]
+				filtering_by_value = sys.argv[3]
+				movie_sorter.filtering_movies(movies_filled, filtering_by_column, filtering_by_value)
+			elif sys.argv[2] == 'oscars':
+				movie_sorter.oscars_nominated_but_no_won(movies_filled)
+			elif sys.argv[2] == 'won_to_nominated':
+				movie_sorter.won_80_of_nominations(movies_filled)
+			elif sys.argv[2] == 'box_office_100m':
+				movie_sorter.box_office_100m(movies_filled)
+
+		# COMPARING FUNCTION CHOSEN
+		if chosen_function == 'compare':
+			column = sys.argv[2]
+			movie1 = sys.argv[3]
+			movie2 = sys.argv[4]
+			movie_sorter.comparing_movies(movies_filled, column, movie1, movie2)
+
+		# ADDING FUNCTION CHOSEN
+		if chosen_function == 'add':
+			name = sys.argv[2]
+			movie_sorter.add_movie(movies_filled, name)
+
+		# ADDING FUNCTION CHOSEN
+		if chosen_function == 'highscores':
+			movie_sorter.highscores_movies(movies_filled)
+
+		# HELP
+		if chosen_function == 'help':
+			file = open('../help.txt', 'r')
+			try:
+				print(file.read())
+			finally:
+				file.close()
+
 	else:
-		output = movie_sorter.sorting_movies('movies_filled.csv', [args.sort_by], True)
-	print(output)
-
-if args.filter_by:
-	output = movie_sorter.filtering_movies('movies_filled.csv', args.column, args.value)
-
-movie_sorter2 = movie_sorter.create_table()
-print(movie_sorter2.loc[5, 'title'])
+		movie_sorter.creating_table()
