@@ -175,7 +175,7 @@ class MovieSorter:
 				if filtering_by in row[column]:
 					index_list.append(index)
 			table = table.loc[index_list]
-			print(table.loc[index_list, ['title', column]])
+			#print(table.loc[index_list, ['title', column]])
 		return table
 
 	def oscars_nominated_but_no_won(self, table_filled):
@@ -188,7 +188,7 @@ class MovieSorter:
 			table = self.creating_table()
 		table = table[table['oscars_nominated'] > 0]
 		table = table[table['oscars_won'] == 0]
-		print(table[['title', 'oscars_nominated', 'oscars_won']])
+		table = table[['title', 'oscars_nominated', 'oscars_won']]
 		return table
 
 	def won_80_of_nominations(self, table_filled):
@@ -206,7 +206,7 @@ class MovieSorter:
 				all_nominated = table.at[index, 'all_nominated']
 				table.at[index, 'won_to_nominated'] = float((all_won / all_nominated) * 100)
 		table = table[table['won_to_nominated'] > 80]
-		print(table[['title', 'all_won', 'all_nominated', 'won_to_nominated']])
+		table = table[['title', 'all_won', 'all_nominated', 'won_to_nominated']]
 		return table
 
 	def box_office_100m(self, table_filled):
@@ -218,7 +218,7 @@ class MovieSorter:
 			print('Table needs to be created from scratch. ')
 			table = self.creating_table()
 		table = table[table['box_office'] > 100000000]
-		print(table[['title', 'box_office']])
+		table = table[['title', 'box_office']]
 		return table
 
 	def comparing_movies(self, table_filled, column, movie1, movie2):
@@ -233,7 +233,6 @@ class MovieSorter:
 		cond1 = table[table['title'] == movie1]
 		cond2 = table[table['title'] == movie2]
 		table = cond1.append(cond2)
-		print(table)
 		return table
 
 	def add_movie(self, table_filled, name):
@@ -243,8 +242,8 @@ class MovieSorter:
 		except:
 			table = self.create_table()
 		table = table.append({'title': name}, ignore_index=True)
-		print(table.tail(10))
-		return table
+		table.to_csv('movies_filled.csv', index=False)
+		return table.tail(10)
 
 	def highscores_movies(self, table_filled):
 		print('Creating table of highscores...')
@@ -266,8 +265,6 @@ class MovieSorter:
 			highscore_movie = highscore_table['title'].to_list()[0]
 			all_highscores_table.at[index, 'Value'] = highscore_value
 			all_highscores_table.at[index, 'Movie'] = highscore_movie
-		print(all_highscores_table)
-
 		return all_highscores_table
 
 
@@ -283,9 +280,9 @@ if __name__ == "__main__":
 			if len(sys.argv) < 4:
 				result = movie_sorter.sorting_movies(movies_filled, sorting_by_columns, False)
 			else:
-				if sys.argv[3] == 'a':
+				if sys.argv[3] == '-a':
 					result = movie_sorter.sorting_movies(movies_filled, sorting_by_columns, False)
-				elif sys.argv[3] == 'd':
+				elif sys.argv[3] == '-d':
 					result = movie_sorter.sorting_movies(movies_filled, sorting_by_columns, True)
 			print(result)
 
@@ -294,29 +291,34 @@ if __name__ == "__main__":
 			if len(sys.argv) == 4:
 				filtering_by_column = sys.argv[2]
 				filtering_by_value = sys.argv[3]
-				movie_sorter.filtering_movies(movies_filled, filtering_by_column, filtering_by_value)
+				result = movie_sorter.filtering_movies(movies_filled, filtering_by_column, filtering_by_value)
 			elif sys.argv[2] == 'oscars':
-				movie_sorter.oscars_nominated_but_no_won(movies_filled)
+				result = movie_sorter.oscars_nominated_but_no_won(movies_filled)
 			elif sys.argv[2] == 'won_to_nominated':
-				movie_sorter.won_80_of_nominations(movies_filled)
+				result = movie_sorter.won_80_of_nominations(movies_filled)
 			elif sys.argv[2] == 'box_office_100m':
-				movie_sorter.box_office_100m(movies_filled)
+				result = movie_sorter.box_office_100m(movies_filled)
+			print(result)
 
 		# COMPARING FUNCTION CHOSEN
 		if chosen_function == 'compare':
 			column = sys.argv[2]
 			movie1 = sys.argv[3]
 			movie2 = sys.argv[4]
-			movie_sorter.comparing_movies(movies_filled, column, movie1, movie2)
+			result = movie_sorter.comparing_movies(movies_filled, column, movie1, movie2)
+			print(result)
 
 		# ADDING FUNCTION CHOSEN
 		if chosen_function == 'add':
 			name = sys.argv[2]
-			movie_sorter.add_movie(movies_filled, name)
+			result = movie_sorter.add_movie(movies_filled, name)
+			print(result)
+
 
 		# ADDING FUNCTION CHOSEN
 		if chosen_function == 'highscores':
-			movie_sorter.highscores_movies(movies_filled)
+			result = movie_sorter.highscores_movies(movies_filled)
+			print(result)
 
 		# HELP
 		if chosen_function == 'help':
