@@ -1,11 +1,14 @@
 import pandas as pd
 import numpy as np
-import requests
+import time
 import sys
+import asyncio
+import requests
+import httpx
 
 
 class MovieSorter:
-	def creating_table(self):
+	async def creating_table(self):
 		# READING CSV FILE
 		movies = pd.read_csv("movies.csv")
 
@@ -35,7 +38,9 @@ class MovieSorter:
 			# GETTING API KEY + DATA
 			title = title.replace(' ', '+')
 			full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
-			whole_movie_info = requests.get(full_url)
+			async with httpx.AsyncClient() as client:
+				whole_movie_info = await client.get(full_url)
+			#whole_movie_info = requests.get(full_url)
 			whole_movie_info = whole_movie_info.json()
 
 			movies.loc[index:index, 'year'] = whole_movie_info["Year"]
@@ -238,6 +243,10 @@ class MovieSorter:
 			all_highscores_table.at[index, 'Movie'] = highscore_movie
 		return all_highscores_table
 
+	async def print_table(self):
+		result = await asyncio.gather(movie_sorter.creating_table())
+		print(result)
+
 
 if __name__ == "__main__":
 	movie_sorter = MovieSorter()
@@ -304,4 +313,12 @@ if __name__ == "__main__":
 				file.close()
 
 	else:
-		movie_sorter.creating_table()
+		start = time.time()
+
+		#movie_sorter.creating_table()
+		loop = asyncio.get_event_loop()
+		loop.run_until_complete(movie_sorter.creating_table())
+		stop = time.time()
+		print(f'Total time: {stop - start}')
+		#asyncio.run(movie_sorter.print_table())
+		# movie_sorter.creating_table()

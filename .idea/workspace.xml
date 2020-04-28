@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3689ff52-43eb-47ff-a90b-15dd8563f86e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/movie_sorter/movies.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_movie_sorter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/movies.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movie_sorter_oop.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movie_sorter_oop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies_filled.csv" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movies_filled.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_movie_sorter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,16 +32,16 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/movie_sorter" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/movie_sorter" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tests" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/movie_sorter" />
     </key>
   </component>
