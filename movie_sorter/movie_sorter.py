@@ -169,20 +169,18 @@ class MovieSorter:
 		print('Filtering movies by:', filtering_by, 'in', column, 'column...')
 		table = self.checking_table('movies_filled.csv')
 		if table[column].dtype == np.int64:
-			filtering_by = int(filtering_by)
-			table = table[table[column] == filtering_by]
-			print(table[['title', column]])
+			table = table[table[column] == int(filtering_by)]
+			table = table[['title', column]]
 		elif table[column].dtype == np.float64:
-			filtering_by = float(filtering_by)
-			table = table[table[column] == filtering_by]
-			print(table[['title', column]])
+			table = table[table[column] == float(filtering_by)]
+			table = table[['title', column]]
 		elif table[column].dtype == np.object:
 			index_list = []
 			for index, row in table.iterrows():
 				if filtering_by in row[column]:
 					index_list.append(index)
-			table = table.loc[index_list]
-			#print(table.loc[index_list, ['title', column]])
+			table = table.loc[index_list, ['title', column]]
+		table = table.reset_index()
 		return table
 
 	def oscars_nominated_but_no_won(self):
