@@ -8,7 +8,7 @@ import httpx
 
 
 class MovieSorter:
-	async def creating_table(self):
+	def creating_table(self):
 		# READING CSV FILE
 		movies = pd.read_csv("movies.csv")
 
@@ -38,9 +38,9 @@ class MovieSorter:
 			# GETTING API KEY + DATA
 			title = title.replace(' ', '+')
 			full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
-			async with httpx.AsyncClient() as client:
-				whole_movie_info = await client.get(full_url)
-			#whole_movie_info = requests.get(full_url)
+			# async with httpx.AsyncClient() as client:
+			# 	whole_movie_info = await client.get(full_url)
+			whole_movie_info = requests.get(full_url)
 			whole_movie_info = whole_movie_info.json()
 
 			movies.loc[index:index, 'year'] = whole_movie_info["Year"]
@@ -148,6 +148,7 @@ class MovieSorter:
 		return table
 
 	def sorting_movies(self, sorting_by, descending):
+		sorting_by = sorting_by.split(',')
 		if descending:
 			print('Sorting movies by:', sorting_by, 'descending...')
 		else:
@@ -160,7 +161,8 @@ class MovieSorter:
 		if 'title' not in sorting_by:
 			sorting_by.append('title')
 		table = table[sorting_by]
-		# print(table[sorting_by])
+		table = table.reset_index()
+		#print(table[sorting_by])
 		return table
 
 	def filtering_movies(self, column, filtering_by):
@@ -243,9 +245,14 @@ class MovieSorter:
 			all_highscores_table.at[index, 'Movie'] = highscore_movie
 		return all_highscores_table
 
-	async def print_table(self):
-		result = await asyncio.gather(movie_sorter.creating_table())
-		print(result)
+
+async def test():
+	movie_sorter = MovieSorter()
+	# result =  await movie_sorter.creating_table()
+	await asyncio.gather(movie_sorter.creating_table())
+
+
+
 
 
 if __name__ == "__main__":
@@ -255,7 +262,7 @@ if __name__ == "__main__":
 
 		# SORTING FUNCTION CHOSEN
 		if chosen_function == 'sort_by':
-			sorting_by_columns = sys.argv[2].split(',')
+			sorting_by_columns = sys.argv[2]
 			if len(sys.argv) < 4:
 				result = movie_sorter.sorting_movies(sorting_by_columns, False)
 			elif len(sys.argv) == 4:
@@ -313,12 +320,13 @@ if __name__ == "__main__":
 				file.close()
 
 	else:
-		start = time.time()
+		#start = time.time()
 
-		#movie_sorter.creating_table()
-		loop = asyncio.get_event_loop()
-		loop.run_until_complete(movie_sorter.creating_table())
-		stop = time.time()
-		print(f'Total time: {stop - start}')
+		movie_sorter.creating_table()
+		# loop = asyncio.get_event_loop()
+		# loop.run_until_complete(asyncio.gather(movie_sorter.creating_table()))
+		#
+		# stop = time.time()
+		# print(f'Total time: {stop - start}')
 		#asyncio.run(movie_sorter.print_table())
 		# movie_sorter.creating_table()
