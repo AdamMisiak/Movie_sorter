@@ -189,6 +189,7 @@ class MovieSorter:
 		table = table[table['oscars_nominated'] > 0]
 		table = table[table['oscars_won'] == 0]
 		table = table[['title', 'oscars_nominated', 'oscars_won']]
+		table = table.reset_index()
 		return table
 
 	def won_80_of_nominations(self):
@@ -248,8 +249,6 @@ async def test():
 	movie_sorter = MovieSorter()
 	# result =  await movie_sorter.creating_table()
 	await asyncio.gather(movie_sorter.creating_table())
-
-
 
 
 

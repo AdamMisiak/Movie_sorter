@@ -52,3 +52,11 @@ def test_filtering_movies():
 	assert movies.loc[0, 'title'] == '12 Angry Men'
 	assert movies.loc[0, 'imdb_rating'] == 8.9
 
+
+def test_oscars_nominated_but_no_won():
+	movie_sorter = MovieSorter()
+	movies = movie_sorter.won_80_of_nominations()
+	shape = movies.shape
+	assert shape[0] == 29
+	assert shape[1] == 3
+
