@@ -6,20 +6,30 @@ all_nominated, imdb_rating, imdb_votes, box_office
 ###################################################################################################
 If you want to:
 - print the whole table/create a fresh fulfilled table: python movies_sorter.py
+
 - sort movies by one column (ascending by default): python movie_sorter.py sort_by NAME_OF_COLUMN
   example: python movie_sorter.py sort_by oscars_won
+
 - sort movies by multiple columns: python movie_sorter.py sort_by NAME_OF_COLUMN,NAME_OF_COLUMN
   example: python movie_sorter.py sort_by imdb_rating,runtime
+
 - sort movies by one or few columns in descending mode: python movie_sorter.py sort_by NAME_OF_COLUMN -d
   example: python movie_sorter.py sort_by all_won -d
+
 - filter movies by some value in some column: python movie_sorter filter_by NAME_OF_COLUMN VALUE_YOU_WANT_TO_FIND
   example: python movie_sorter.py filter_by genre Drama
+
 - filter movies that were nominated for Oscar but did not win any: python movie_sorter.py filter_by oscars
+
 - filter movies that won more than 80% of nominations: python movie_sorter.py filter_by won_to_nominated
+
 - filter movies that earned more than 100,000,000 $: python movie_sorter.py filter_by box_office_100m
+
 - compare two movies by column: python movie_sorter.py compare NAME_OF_COLUMN NAME_OF_MOVIE NAME_OF_MOVIE
   example: python movie_sorter.py compare imdb_rating "Warrior" "Coco"
+
 - add new movie to table: python movie_sorter_oop.py add TITLE_OF_MOVIE
   example: python movie_sorter.py add "Kac Wawa"
+
 - print the table of highscores: python movie_sorter.py highscores
 ###################################################################################################

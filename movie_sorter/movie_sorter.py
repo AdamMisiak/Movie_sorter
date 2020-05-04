@@ -211,6 +211,7 @@ class MovieSorter:
 		table = self.checking_table('movies_filled.csv')
 		table = table[table['box_office'] > 100000000]
 		table = table[['title', 'box_office']]
+		table = table.reset_index()
 		return table
 
 	def comparing_movies(self, column, movie1, movie2):
@@ -220,14 +221,15 @@ class MovieSorter:
 		cond1 = table[table['title'] == movie1]
 		cond2 = table[table['title'] == movie2]
 		table = cond1.append(cond2)
+		table = table.reset_index()
 		return table
 
-	def add_movie(self, name):
+	def adding_movie(self, name):
 		print('Adding movie:', name, 'to movies table...')
 		table = self.checking_table('movies_filled.csv')
 		table = table.append({'title': name}, ignore_index=True)
 		table.to_csv('movies_filled.csv', index=False)
-		return table.tail(10)
+		return table
 
 	def highscores_movies(self):
 		print('Creating table of highscores...')
@@ -238,7 +240,7 @@ class MovieSorter:
 		all_highscores_table = pd.DataFrame(columns=['Column', 'Movie', 'Value'])
 		all_highscores_table['Column'] = table_columns
 		for index, row in enumerate(table_columns):
-			highscore_table = movie_sorter.sorting_movies([row], True)
+			highscore_table = self.sorting_movies(row, True)
 			highscore_value = highscore_table[row].to_list()[0]
 			highscore_movie = highscore_table['title'].to_list()[0]
 			all_highscores_table.at[index, 'Value'] = highscore_value
@@ -246,11 +248,10 @@ class MovieSorter:
 		return all_highscores_table
 
 
-async def test():
-	movie_sorter = MovieSorter()
-	# result =  await movie_sorter.creating_table()
-	await asyncio.gather(movie_sorter.creating_table())
-
+# async def test():
+# 	movie_sorter = MovieSorter()
+# 	# result =  await movie_sorter.creating_table()
+# 	await asyncio.gather(movie_sorter.creating_table())
 
 
 if __name__ == "__main__":
@@ -301,7 +302,7 @@ if __name__ == "__main__":
 		# ADDING FUNCTION CHOSEN
 		if chosen_function == 'add':
 			name = sys.argv[2]
-			result = movie_sorter.add_movie(name)
+			result = movie_sorter.adding_movie(name)
 			print(result)
 
 		# ADDING FUNCTION CHOSEN
@@ -319,7 +320,6 @@ if __name__ == "__main__":
 
 	else:
 		#start = time.time()
-
 		movie_sorter.creating_table()
 		# loop = asyncio.get_event_loop()
 		# loop.run_until_complete(asyncio.gather(movie_sorter.creating_table()))
@@ -327,4 +327,3 @@ if __name__ == "__main__":
 		# stop = time.time()
 		# print(f'Total time: {stop - start}')
 		#asyncio.run(movie_sorter.print_table())
-		# movie_sorter.creating_table()

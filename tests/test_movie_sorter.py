@@ -81,3 +81,48 @@ def test_won_to_nominated():
 	assert movies.loc[43, 'all_won'] == 21
 	assert movies.loc[43, 'all_nominated'] == 21
 	assert movies.loc[43, 'won_to_nominated'] == 100
+
+
+def test_box_office_100m():
+	movie_sorter = MovieSorter()
+	movies = movie_sorter.box_office_100m()
+	shape = movies.shape
+	assert shape[0] == 13
+	assert shape[1] == 3
+	assert movies.loc[0, 'title'] == 'The Dark Knight'
+	assert movies.loc[0, 'box_office'] == 533316061
+
+
+def test_comparing_movies():
+	movie_sorter = MovieSorter()
+	movies = movie_sorter.comparing_movies('imdb_rating', 'Warrior', 'Coco')
+	shape = movies.shape
+	assert shape[0] == 2
+	assert shape[1] == 3
+	assert movies.loc[0, 'title'] == 'Warrior'
+	assert movies.loc[0, 'imdb_rating'] == 8.2
+
+
+def test_adding_movie():
+	movie_sorter = MovieSorter()
+	movies_before = movie_sorter.creating_table()
+	shape_before = movies_before.shape
+	movies_after = movie_sorter.adding_movie('Harry Potter')
+	shape_after = movies_after.shape
+	assert shape_before[0] == 100
+	assert shape_after[0] == 101
+	assert shape_after[1] == 23
+	assert movies_after.loc[0, 'title'] == 'The Shawshank Redemption'
+	assert movies_after.loc[100, 'title'] == 'Harry Potter'
+
+
+def test_highscores_movies():
+	movie_sorter = MovieSorter()
+	movies = movie_sorter.highscores_movies()
+	shape = movies.shape
+	assert shape[0] == 12
+	assert shape[1] == 3
+	assert movies.loc[0, 'Column'] == 'runtime'
+	assert movies.loc[0, 'Movie'] == 'Gone with the Wind'
+	assert movies.loc[0, 'Value'] == 238
+
