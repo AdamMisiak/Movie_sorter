@@ -4,6 +4,7 @@
     <list default="true" id="3689ff52-43eb-47ff-a90b-15dd8563f86e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movies_filled.csv" beforeDir="false" afterPath="$PROJECT_DIR$/movies_filled.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_movie_sorter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

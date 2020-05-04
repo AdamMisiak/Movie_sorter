@@ -203,6 +203,7 @@ class MovieSorter:
 				table.at[index, 'won_to_nominated'] = float((all_won / all_nominated) * 100)
 		table = table[table['won_to_nominated'] > 80]
 		table = table[['title', 'all_won', 'all_nominated', 'won_to_nominated']]
+		table = table.reset_index()
 		return table
 
 	def box_office_100m(self):
