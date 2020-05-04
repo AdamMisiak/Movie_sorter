@@ -1,10 +1,10 @@
 # Movie sorter
->Couple of data science tasks. Fulfilling, sorting, filtering and comparing table. Script created using Pandas tool. Task taken from the Profil Software House internship backend tasks.
+>Couple of data science tasks. Fulfilling, sorting, filtering and comparing table. Script created using Pandas tool. Task taken from the Profil Software House internship backend tasks 2019.
  
-The task consists of writing a script that fills example data source with data from OMDb API.\ 
-Given data source contains only titles of movies.\ 
-Api generated from: http://www.omdbapi.com \ 
-Own API key generated from: http://www.omdbapi.com/apikey.aspx \ 
+The task consists of writing a script that fills example data source with data from OMDb API.\
+Given data source contains only titles of movies.\
+Api generated from: http://www.omdbapi.com \
+Own API key generated from: http://www.omdbapi.com/apikey.aspx 
 
 ## Table of contents
 * [Technologies](#technologies)
