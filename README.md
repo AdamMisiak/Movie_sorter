@@ -15,12 +15,9 @@ Own API key generated from: http://www.omdbapi.com/apikey.aspx
 * Python version: 3.7
 
 ## Setup
-To change directory to movie_sorter catalog:
+To change directory to movie_sorter catalog and create fulfilled table:
 ```
 cd movie_sorter
-```
-To create fulfilled table:
-```
 python movie_sorter.py
 ```
 To get full list of commands:
