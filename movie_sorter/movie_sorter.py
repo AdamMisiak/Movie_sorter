@@ -7,9 +7,20 @@ import requests
 import httpx
 
 
+async def coroutine(title):
+	# GETTING API KEY AND DATA
+	title = title.replace(' ', '+')
+	full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
+	async with httpx.AsyncClient() as client:
+		whole_movie_info = await client.get(full_url)
+	whole_movie_info = whole_movie_info.json()
+	return whole_movie_info
+
+
 class MovieSorter:
+
 	def creating_table(self):
-		# READING CSV FILE
+		# READING EMPTY CSV FILE
 		movies = pd.read_csv("movies.csv")
 
 		movies['genre'] = movies['genre'].astype('object')
@@ -32,16 +43,15 @@ class MovieSorter:
 		movies.insert(19, 'all_nominated', 0)
 		movies = movies.drop('awards', 1)
 
-		# FILLING TABLE WITH DATA
-		for index, title in enumerate(movies['title']):
+		# ASYNCHRONOUS CREATING FILLED LIST
+		loop = asyncio.get_event_loop()
+		empty_list = []
+		for movie in movies['title']:
+			empty_list.append(coroutine(movie))
+		movies_list = loop.run_until_complete(asyncio.gather(*empty_list))
 
-			# GETTING API KEY + DATA
-			title = title.replace(' ', '+')
-			full_url = 'http://www.omdbapi.com/?t=' + title + '&apikey=68ecd7ba'
-			# async with httpx.AsyncClient() as client:
-			# 	whole_movie_info = await client.get(full_url)
-			whole_movie_info = requests.get(full_url)
-			whole_movie_info = whole_movie_info.json()
+		# FILLING TABLE WITH DATA
+		for index, whole_movie_info in enumerate(movies_list):
 
 			movies.loc[index:index, 'year'] = whole_movie_info["Year"]
 			movies.loc[index:index, 'runtime'] = whole_movie_info["Runtime"][:-3]
@@ -248,12 +258,6 @@ class MovieSorter:
 		return all_highscores_table
 
 
-# async def test():
-# 	movie_sorter = MovieSorter()
-# 	# result =  await movie_sorter.creating_table()
-# 	await asyncio.gather(movie_sorter.creating_table())
-
-
 if __name__ == "__main__":
 	movie_sorter = MovieSorter()
 	if len(sys.argv) > 1:
@@ -276,7 +280,7 @@ if __name__ == "__main__":
 			print(result)
 
 		# FILTERING FUNCTION CHOSEN
-		if chosen_function == 'filter_by':
+		elif chosen_function == 'filter_by':
 			if len(sys.argv) == 4:
 				filtering_by_column = sys.argv[2]
 				filtering_by_value = sys.argv[3]
@@ -288,11 +292,11 @@ if __name__ == "__main__":
 			elif sys.argv[2] == 'box_office_100m':
 				result = movie_sorter.box_office_100m()
 			else:
-				result = 'Ups! Something went wrong, type: "python movie_sorter.py help" to get list of commands'
+				result = 'Ups! Something went wrong, type: "python movie_sorter.py -help" to get list of commands'
 			print(result)
 
 		# COMPARING FUNCTION CHOSEN
-		if chosen_function == 'compare':
+		elif chosen_function == 'compare':
 			column = sys.argv[2]
 			movie1 = sys.argv[3]
 			movie2 = sys.argv[4]
@@ -300,30 +304,28 @@ if __name__ == "__main__":
 			print(result)
 
 		# ADDING FUNCTION CHOSEN
-		if chosen_function == 'add':
+		elif chosen_function == 'add':
 			name = sys.argv[2]
 			result = movie_sorter.adding_movie(name)
 			print(result)
 
 		# ADDING FUNCTION CHOSEN
-		if chosen_function == 'highscores':
+		elif chosen_function == 'highscores':
 			result = movie_sorter.highscores_movies()
 			print(result)
 
 		# HELP
-		if chosen_function == 'help':
+		elif chosen_function == '-help':
 			file = open('../help.txt', 'r')
 			try:
 				print(file.read())
 			finally:
 				file.close()
+		else:
+			result = 'Ups! Something went wrong, type: "python movie_sorter.py -help" to get list of commands'
+			print(result)
 
 	else:
-		#start = time.time()
 		movie_sorter.creating_table()
-		# loop = asyncio.get_event_loop()
-		# loop.run_until_complete(asyncio.gather(movie_sorter.creating_table()))
-		#
-		# stop = time.time()
-		# print(f'Total time: {stop - start}')
-		#asyncio.run(movie_sorter.print_table())
+
+

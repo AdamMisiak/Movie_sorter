@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3689ff52-43eb-47ff-a90b-15dd8563f86e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/help.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movie_sorter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movie_sorter/movies_filled.csv" beforeDir="false" afterPath="$PROJECT_DIR$/movie_sorter/movies_filled.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movies_filled.csv" beforeDir="false" afterPath="$PROJECT_DIR$/movies_filled.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_movie_sorter.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_movie_sorter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,11 +85,12 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2338" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1585161624470" />
-    <state x="2663" y="298" width="424" height="491" key="FileChooserDialogImpl" timestamp="1588081048837">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="781" y="318" width="424" height="491" key="FileChooserDialogImpl" timestamp="1589012093756">
+      <screen x="62" y="27" width="1858" height="1053" />
     </state>
     <state x="2663" y="298" width="424" height="490" key="FileChooserDialogImpl/62.27.1858.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588081048837" />
-    <state x="781" y="318" width="424" height="491" key="FileChooserDialogImpl/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1587809659606" />
+    <state x="781" y="318" width="424" height="491" key="FileChooserDialogImpl/62.27.1858.1053/1920.0.1920.1080@62.27.1858.1053" timestamp="1588778948612" />
+    <state x="781" y="318" width="424" height="491" key="FileChooserDialogImpl/62.27.1858.1053@62.27.1858.1053" timestamp="1589012093756" />
     <state width="1874" height="273" key="GridCell.Tab.0.bottom" timestamp="1585167427517">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
