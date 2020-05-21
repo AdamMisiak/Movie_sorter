@@ -10,7 +10,7 @@ def test_creating_table():
 	assert movies.loc[5, 'title'] == 'The Dark Knight'
 	assert movies.loc[5, 'director'] == ['Christopher Nolan']
 	assert movies.loc[5, 'imdb_rating'] == 9.0
-	assert movies.loc[5, 'box_office'] == 533316061
+
 
 def test_checking_table():
 	movie_sorter = MovieSorter()
@@ -87,10 +87,10 @@ def test_box_office_100m():
 	movie_sorter = MovieSorter()
 	movies = movie_sorter.box_office_100m()
 	shape = movies.shape
-	assert shape[0] == 13
+	assert shape[0] == 1
 	assert shape[1] == 3
-	assert movies.loc[0, 'title'] == 'The Dark Knight'
-	assert movies.loc[0, 'box_office'] == 533316061
+	assert movies.loc[0, 'title'] == 'Coco'
+	assert movies.loc[0, 'box_office'] == 208487719
 
 
 def test_comparing_movies():
