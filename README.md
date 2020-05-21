@@ -22,7 +22,7 @@ python movie_sorter.py
 ```
 To get full list of commands:
 ```
-python movie_sorter.py help 
+python movie_sorter.py -help 
 ```
 
 ## Contact
