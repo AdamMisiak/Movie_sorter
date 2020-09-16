@@ -15,6 +15,10 @@ Own API key generated from: http://www.omdbapi.com/apikey.aspx
 * Python version: 3.7
 
 ## Setup
+To install libraries:
+```
+pip install -r requirements.txt
+```
 To change directory to movie_sorter catalog and create filled table:
 ```
 cd movie_sorter
